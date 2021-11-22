@@ -12,7 +12,7 @@ const getNode = (headA, headB) => {
     let count = 0;
     while (l1 !== l2 && count < 3) {
         if (!l1.next || !l2.next) count++;
-        l1 = l1.next ? li.next : headB;
+        l1 = l1.next ? l1.next : headB;
         l2 = l2.next ? l2.next : headA;
     }
     return l1 == l2 ? l1 : null;
