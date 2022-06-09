@@ -9,7 +9,7 @@ const isPalindrome = (x) => {
 console.log(isPalindrome(123321))
 
 
-const isPalindrome = (x) => {
+const isPalindrome1 = (x) => {
     const str = x.toString();
     const len = str.length;
     const halfLen = (len - 1) / 2;
