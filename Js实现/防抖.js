@@ -20,21 +20,27 @@ function debounce(fn, wait) {
 }
 
 // 立即执行版本
-function debounce(fn, wait) {
+function debounce(fn, wait, immediate) {
     let timer = null;
 
     return function () {
         const context = this;
         const args = arguments;
-
-        if (!timer) {
-            fn.apply(context, args);
+        if (timer) clearTimeout(timer);
+        if (immediate) {
+            // 立即执行
+            if (!timer) {
+                fn.apply(context, args);
+            }
+            timer = setTimeout(() => {
+                timer = null;
+            }, wait);
+        } else {
+            // 延迟执行
+            timer = setTimeout(() => {
+                fn.apply(context, args);
+                timer = null;
+            }, wait);
         }
-        if (timer) {
-            clearTimeout(timer);
-        }
-        timer = setTimeout(() => {
-            timer = null;
-        }, wait);
     }
 }
