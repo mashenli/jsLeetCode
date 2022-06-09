@@ -44,3 +44,32 @@ function debounce(fn, wait, immediate) {
         }
     }
 }
+
+// 取消防抖
+function debounce(func, wait, immediate) {
+    var timeout = null,
+        result = null
+    var debounced = function () {
+        var context = this
+        var args = this
+        if (timeout) clearTimeout(timeout)
+        if (immediate) {
+            // 立即执行
+            if (!timeout) result = func.aplly(context, args)
+            timeout = setTimeout(function () {
+                timeout = null
+            }, wait)
+        } else {
+            // 延迟执行
+            timeout = setTimeout(function () {
+                func.apply(context, args)
+            }, wait)
+        }
+        return result
+    }
+    debounced.cancel = function () {
+        clearTimeout(timeout)
+        timeout = null
+    }
+    return debounced
+}
