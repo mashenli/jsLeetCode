@@ -181,22 +181,75 @@ Promise.race = function (promises) {
     })
 }
 //all方法(获取所有的promise，都执行then，把结果放到数组，一起返回)
-Promise.all = function (promises) {
-    let arr = [];
-    let i = 0;
+Promise.all = (promises) => {
+    return new Promise((resolve, reject) => {
+        let result = [];
+        let times = 0;
+        // 将成功结果放入数组中对应的位置
+        const processSuccess = (index, val) => {
+            result[index] = val;
+            if (++times === promises.length) {
+                resolve(result); // 全部执行成功，返回 result
+            }
+        }
 
-    function processData(index, data) {
-        arr[index] = data;
-        i++;
-        if (i == promises.length) {
-            resolve(arr);
-        };
-    };
+        // 遍历处理集合中的每一个 promise
+        for (let i = 0; i < promises.length; i++) {
+            let p = promises[i];
+            if (p && typeof p.then === 'function') {
+                // 调用这个p的 then 方法
+                p.then((data) => {
+                    // 按照执行顺序存放执行结果
+                    processSuccess(i, data)
+                }, reject);
+            } else {
+                // 普通值，直接按照执行顺序放入数组对应位置
+                processSuccess(i, p)
+            }
+        }
+    })
+}
+
+// allsettled方法
+// 批处理 promise，返回 promise；
+// 存在失败结果也会拿到全部执行结果，不会走 catch；
+// 解决了 Promise.all 不能拿到失败执行结果的问题；
+Promise.allSettled = function (promises) {
+    const result = new Array(promises.length); // 记录执行的结果：用于返回直接结果
+    let times = 0; // 记录执行完成的次数：判断是否完成
     return new Promise((resolve, reject) => {
         for (let i = 0; i < promises.length; i++) {
-            promises[i].then(data => {
-                processData(i, data);
-            }, reject);
-        };
-    });
+            let p = promises[i];
+            if (p && typeof p.then === 'function') {
+                p.then((data) => {
+                    result[i] = {
+                        status: 'fulfilled',
+                        value: data
+                    }
+                    times++;
+                    if (times === promises.length) {
+                        resolve(result);
+                    }
+                }).catch(err => {
+                    result[i] = {
+                        status: 'rejected',
+                        reason: err
+                    }
+                    times++;
+                    if (times === promises.length) {
+                        resolve(result);
+                    }
+                })
+            } else { // 普通值，加入
+                result[i] = {
+                    status: 'fulfilled',
+                    value: p
+                }
+                times++;
+                if (times === promises.length) {
+                    resolve(result);
+                }
+            }
+        }
+    })
 }
