@@ -20,7 +20,7 @@ const merge = (nums1, m, nums2, n) => {
 }
 
 // 双指针
-const merge = (nums1, m, nums2, n) => {
+const merge1 = (nums1, m, nums2, n) => {
     let p = m + n - 1;
     let p1 = m - 1;
     let p2 = n - 1;
