@@ -6,12 +6,9 @@ const sumFn = (str1, str2) => {
     let res = [];
     let num = 1;
     let addOne = 0; //是否进位
-    while (str1.length < str2.length) {
-        str1 = 0 + str1;
-    }
-    while (str1.length > str2.length) {
-        str2 = 0 + str2;
-    }
+    let maxLength = Math.max(str1.length, str2.length);
+    str1 = str1.padStart(maxLength, 0);
+    str2 = str2.padStart(maxLength, 0);
     for (let i = str1.length - 1; i >= 0; i--) {
         num = parseInt(str1[i]) + parseInt(str2[i]) + addOne;
         if (num >= 2) {
