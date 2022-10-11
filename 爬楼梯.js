@@ -5,12 +5,16 @@
  * @param {number} num 台阶数
  */
 const climbStairs = (num) => {
-    if (n < 2) return 1;
-    let dp0 = dp1 = 1;
-    for (let i = 2; i <= num; i++) {
-        const temp = dp0;
-        dp0 = dp1;
-        dp1 = temp + dp1;
+    //使用动态规划的方法；时间复杂度是o（n），空间也是o（n）
+    //n表示楼梯数
+    if (n === 1) {
+        return 1;
     }
-    return dp1;
+    let result = []; //用数组result保存1-n个楼梯时走路的种数
+    result[1] = 1; //为了方便，数组下标从1开始保存数值，第n个表示n步有几种走法
+    result[2] = 2;
+    for (let i = 3; i < n; i++) {
+        result[i] = result[i - 1] + result[i - 2];
+    }
+    return result[n];
 }
