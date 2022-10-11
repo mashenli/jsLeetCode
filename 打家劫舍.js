@@ -4,15 +4,22 @@
  * 思路： 偷取第 i 家时，有两种选择： 偷取第 i 家，此时金额为：res[i] = res[i-2]+nums[i]; 不偷，此时金额为：res[i] = res[i-1]; 所以最高金额为两者取较大值。
  */
 
-const maxCount = (list) => {
-    if (list.length < 2) return list[list.length - 1] || 0;
-    let res = [list[0], Math.max(list[0], list[1])];
-    for (let i = 2; i < list.length; i++) {
-        res[i] = Math.max(list[i] + res[i - 2], res[i - 1]);
+const maxCount = (nums) => {
+    const len = nums.length;
+    if (!len) {
+        return 0;
     }
-    return res[list.length - 1];
+
+    const dp = new Array(len + 1);
+    dp[0] = 0;
+    dp[1] = nums[0];
+
+    for (let i = 2; i <= len; i++) {
+        dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i - 1]);
+    }
+    return dp[len];
 }
 
-let list = [1,2,3,5,1]
+let list = [2, 7, 9, 3, 1]
 
-console.log(maxCount(list))
+console.log(maxCount(list));

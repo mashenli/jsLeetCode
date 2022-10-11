@@ -38,3 +38,33 @@ const merge1 = (nums1, m, nums2, n) => {
         }
     }
 }
+
+const merge2 = (nums1, nums2) => {
+    const nL1 = nums1.length;
+    const nL2 = nums2.length;
+
+    let p = nL1 + nL2 - 1;
+    let p1 = nL1 - 1;
+    let p2 = nL2 - 1;
+
+    while (p2 >= 0) {
+        if (p1 < 0) {
+            nums1[p--] = nums2[p2--];
+        } else if (nums2[p2] > nums1[p1]) {
+            nums1[p] = nums2[p2];
+            p--;
+            p2--;
+        } else {
+            nums1[p] = nums1[p1];
+            p--;
+            p1--;
+        }
+    }
+
+    return nums1;
+}
+
+const arr1 = [1, 2, 3, 4, 5, 6, 8, 9, 10];
+const arr2 = [2, 3, 4, 5, 7, 8];
+
+console.log(merge2(arr1, arr2));
