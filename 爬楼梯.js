@@ -13,8 +13,10 @@ const climbStairs = (n) => {
     let result = []; //用数组result保存1-n个楼梯时走路的种数
     result[1] = 1; //为了方便，数组下标从1开始保存数值，第n个表示n步有几种走法
     result[2] = 2;
-    for (let i = 3; i < n; i++) {
+    for (let i = 3; i <= n; i++) {
         result[i] = result[i - 1] + result[i - 2];
     }
     return result[n];
 }
+
+console.log(climbStairs(5));
