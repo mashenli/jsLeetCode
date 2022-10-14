@@ -22,6 +22,7 @@ function debounce(fn, wait) {
 // 立即执行版本
 function debounce(fn, wait, immediate) {
     let timer = null;
+    let flag = true;
 
     return function () {
         const context = this;
@@ -29,11 +30,12 @@ function debounce(fn, wait, immediate) {
         if (timer) clearTimeout(timer);
         if (immediate) {
             // 立即执行
-            if (!timer) {
+            if (flag) {
                 fn.apply(context, args);
+                flag = false;
             }
             timer = setTimeout(() => {
-                timer = null;
+                flag = true;
             }, wait);
         } else {
             // 延迟执行
