@@ -6,26 +6,26 @@ const isEqualObject = (obj1, obj2) => {
     区别： Object.keys()返回可枚举的，Object.getOwnPropertyNames()返回所有的。
     Object.getOwnPropertyNames也可以获取key
     */
-    const keyList1 = Object.keys(obj1);
-    const keyList2 = Object.keys(obj2);
-    if (keyList1.length !== keyList2.length) return false;
-    for (let i = 0; i < keyList1.length; i++) {
-        const keyItem = keyList1[i];
-        const value1 = obj1[keyItem];
-        const value2 = obj2[keyItem];
-        if (typeof value1 === 'object') {
-            if (isEqualObject(value1, value2)) {
-                return true;
-            } else {
+    const k1 = Object.keys(obj1);
+    const k2 = Object.keys(obj2);
+
+    if (k1.length !== k2.length) return false;
+
+    for (let i = 0; i < k1.length; i++) {
+        const key = k1[i];
+        const v1 = obj1[key];
+        const v2 = obj2[key];
+        if (typeof v1 === 'object') {
+            if (!isEqualObject1(v1, v2)) {
+                return false;
+            }
+        } else {
+            if (v1 !== v2) {
                 return false;
             }
         }
-        if (value1 !== value2) {
-            return false;
-        }
     }
     return true;
-
 }
 
 const a = {
@@ -52,9 +52,9 @@ const b = {
     },
     e: {
         a: 1,
-        b: 2
+        b: {
+            d: 2
+        }
     },
 }
-
-
 console.log(isEqualObject(a, b))
