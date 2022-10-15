@@ -8,14 +8,17 @@
 */
 
 const searchNum = (arr, target) => {
-    if (arr.length < 2) return [];
-    for (let i = 0; i < arr.length - 1; i++) {
-        for (let j = i + 1; j < arr.length; j++) {
-            if (arr[i] + arr[j] === target) {
-                return [arr[i], arr[j]]
-            }
+    const map = new Map();
+    for (let i = 0; i < arr.length; i++) {
+        const flag = map.has(arr[i]);
+        if (!flag) {
+            map.set(target - arr[i], i);
+        } else {
+            return [map.get(nums[i]), i];
         }
     }
 }
 
-console.log(searchNum(nums, 9));
+const nums = [3, 2, 4];
+
+console.log(searchNum(nums, 6));
