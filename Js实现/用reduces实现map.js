@@ -1,13 +1,13 @@
-Array.prototype._map = function (fn, callbackThis) {
-    // 最终返回的新数组
-    let res = [];
-    // 定义回调函数的执行环境
-    // call第一个参数传入null，则 this指向全局对象，同 map的规则
-    let CBThis = callbackThis || null;
-    this.reduce((brfore, after, idx, arr) => {
-        // 传入map回调函数拥有的参数
-        // 把每一项的执行结果push进res中
-        res.push(fn.call(CBThis, after, idx, arr));
-    }, null);
-    return res;
+Array.prototype._map = function (fn, thisArg = []) {
+    return this.reduce((pre, cur, index, arr) => {
+        return pre.concat(fn.call(thisArg, cur, index, arr));
+    }, []);;
 };
+
+const a = new Array(3);
+a.push(...[1, 2, 3]);
+const b = a._map((i) => {
+    console.log(i);
+    return i;
+})
+console.log(b);
