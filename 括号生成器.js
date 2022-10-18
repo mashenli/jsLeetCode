@@ -30,3 +30,5 @@ var generateParenthesis = function (n) {
     dfs(n, n, '');
     return res;
 };
+
+console.log(generateParenthesis(3));
