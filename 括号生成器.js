@@ -12,7 +12,6 @@
 var generateParenthesis = function (n) {
     // 定义最终返回的结果
     const res = [];
-    dfs(n, n, '');
     // dfs函数
     function dfs(Lremain, Rremain, str) {
         // 如果str参数的长度等于2n，说明递归结束了
@@ -28,5 +27,6 @@ var generateParenthesis = function (n) {
             dfs(Lremain, Rremain - 1, str + ')')
         }
     }
+    dfs(n, n, '');
     return res;
 };
