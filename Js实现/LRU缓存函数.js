@@ -10,11 +10,27 @@
 旧的内容肯定要被淘汰，所以就有这样的使用背景。
  */
 
+/**
+特点分析：
+我们需要一块有限的存储空间，因为无限的化就没必要使用 LRU 算发删除数据了。
+我们这块存储空间里面存储的数据需要是有序的，因为我们必须要顺序来删除数据，所以可以考虑使用 Array、Map 数据结构来存储，不能使用 Object，因为它是无序的。
+我们能够删除或者添加以及获取到这块存储空间中的指定数据。
+存储空间存满之后，在添加数据时，会自动删除时间最久远的那条数据。
+
+实现需求：
+实现一个 LRUCache 类型，用来充当存储空间
+采用 Map 数据结构存储数据，因为它的存取时间复杂度为 O(1)，数组为 O(n)
+实现 get 和 set 方法，用来获取和添加数据
+我们的存储空间有长度限制，所以无需提供删除方法，存储满之后，自动删除最久远的那条数据
+当使用 get 获取数据后，该条数据需要更新到最前面
+*/
+
 class LRUCache {
     constructor(size) {
-        this.size = size;
-        this.cache = new Map();
+        this.size = size; // 存储长度
+        this.cache = new Map(); // 存储数据
     }
+    // 首先从 map 对象中拿出该条数据，然后删除该条数据，最后再重新插入该条数据，确保将该条数据移动到最前面。
     get(key) {
         const hasKey = this.cache.has(key);
         if (hasKey) {
@@ -26,6 +42,9 @@ class LRUCache {
             return -1;
         }
     }
+    // 存储数据，采用key, value的形式
+    // 往 map 里面添加新数据，如果添加的数据存在了，则先删除该条数据，然后再添加。
+    // 如果添加数据后超长了，则需要删除最久远的一条数据。data.keys().next().value 便是获取最后一条数据的意思。
     set(key, value) {
         const hasKey = this.cache.has(key);
         if (hasKey) {

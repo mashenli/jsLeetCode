@@ -33,3 +33,12 @@ class Observed {
         });
     }
 }
+
+let mObserved = new Observed();
+let mObserver1 = new Observer();
+let mObserver2 = new Observer();
+
+mObserved.addObserver(mObserver1);
+mObserved.addObserver(mObserver2);
+
+mObserved.notify();
