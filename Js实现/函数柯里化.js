@@ -35,10 +35,12 @@ const add = (...args) => args.reduce((a, b) => a + b);
 
 // 简化写法
 function currying(func) {
-    const args = [];
+    let args = [];
     return function result(...rest) {
         if (rest.length === 0) {
-            return func(...args);
+            const res = func(...args);
+            args = [];
+            return res;
         } else {
             args.push(...rest);
             return result;
