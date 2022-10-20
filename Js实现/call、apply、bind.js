@@ -1,20 +1,18 @@
 Function.prototype.myBind = function (context) {
-    let args = [].slice.call(arguments, 1);
-    const context = context;
-    const fn = this;
-
-    let fbound = function () {
-        // 当作为构造函数时，this 指向实例，此时结果为 true，将绑定函数的 this 指向该实例，可以让实例获得来自绑定函数的值
-        const newArgs = args.concat([].slice.call(arguments));
-        return fn.apply(this instanceof fn ? this : context, newArgs)
+    // 判断调用对象是否为函数
+    if (typeof this !== "function") {
+        throw new TypeError("Error");
+    }
+    // 获取参数
+    let args = [...arguments].slice(1);
+    let fn = this;
+    return function Fn() {
+        // 根据调用方式，传入不同绑定值
+        return fn.apply(
+            this instanceof Fn ? this : context,
+            args.concat(...arguments)
+        );
     };
-
-    function Constructor() {};
-    // 修改返回函数的 prototype 为绑定函数的 prototype，实例就可以继承绑定函数的原型中的值
-    Constructor.prototype = fn.prototype;
-    fbound.prototype = new Constructor();
-
-    return fbound;
 }
 
 Function.prototype.myCall = function (context) {
