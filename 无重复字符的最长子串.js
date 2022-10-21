@@ -15,12 +15,34 @@ const lengthOfLongestSubstring = (s) => {
         }
         max = Math.max(max, temp.length);
     }
-    return {
-        max,
-        temp
-    };
+    return max; // 最大长度
 };
 
 const s = 'abcabcbb';
 
 console.log(lengthOfLongestSubstring(s));
+
+
+const longSubstring = (s) => {
+    let left = 0;
+    let right = 1;
+    let res; // 结果
+    let temp;
+    let max = 0; // 最大长度
+    while (right < s.length) {
+        temp = s.slice(left, right);
+        if (temp.indexOf(s.charAt(right)) > -1) {
+            left++;
+            continue;
+        } else {
+            right++;
+        }
+        if (right - left > max) {
+            max = right - left;
+            res = s.slice(left, left + max)
+        }
+    }
+    return {res, max};
+}
+
+console.log(longSubstring(s)); // abc
