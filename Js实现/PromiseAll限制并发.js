@@ -50,4 +50,28 @@ for (let index = 0; index < 10; index++) {
     });
 
 }
-console.log(PromiseLimit(result).then(d => console.log(d)));
+// console.log(PromiseLimit(result).then(d => console.log(d)));
+
+
+const res = [];
+
+for (let i = 0; i < 10; i++) {
+    // res.push()
+    // const p = new Promise((res) => {
+    //     setTimeout(() => {
+    //         res(i);
+    //     }, 2000);
+    // });
+    const p = function () {
+        return new Promise((res) => {
+            setTimeout(() => {
+                res(i);
+            }, 2000);
+        });
+    }
+    res.push(p);
+}
+
+PromiseLimit(res).then(data => {
+    console.log(data);
+})
