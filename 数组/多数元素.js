@@ -17,9 +17,9 @@ const findItem = (arr) => {
     //     }
     // }
     arr.sort();
-    return arr[arr.length / 2];
+    return arr[Math.ceil(arr.length / 2)];
 }
 
-const a = [1];
+const a = [1, 2, 3, 4, 4, 4, 4];
 
 console.log(findItem(a));
