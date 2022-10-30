@@ -10,7 +10,7 @@ const isStraight = (nums) => {
     let c = 0
     for (let i = 0; i < restArr.length - 1; i++) {
         if (restArr[i + 1] - restArr[i] > 1) {
-            c += restArr[i + 1] - restArr[i] - 1
+            c += restArr[i + 1] - restArr[i] - 1 // 判断大小王的个数 以及 需要填充的空位数是否匹配。
         } else if (restArr[i + 1] === restArr[i]) { // 只要有相等的元素，肯定不是顺子
             return false;
         }
