@@ -1,3 +1,22 @@
+const obj = [{
+    a: 1,
+    b: 2
+}, {
+    a: 1
+}, {
+    a: 1
+}, {
+    a: 1,
+    b: {
+        c: 1
+    }
+}, {
+    b: {
+        c: 1
+    },
+    a: 1
+}]
+
 const isEqualObject = (obj1, obj2) => {
     /*
     Object.keys() 方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和正常循环遍历该对象时返回的顺序一致 。
@@ -27,34 +46,22 @@ const isEqualObject = (obj1, obj2) => {
     }
     return true;
 }
-
-const a = {
-    a: 1,
-    b: 2,
-    c: 3,
-    d: {
-        a: 1,
-        b: 2
-    },
-    e: {
-        a: 1,
-        b: 2
-    },
-}
-
-const b = {
-    a: 1,
-    b: 2,
-    c: 3,
-    d: {
-        a: 1,
-        b: 2
-    },
-    e: {
-        a: 1,
-        b: {
-            d: 2
+const arrF = (arr) => {
+    const res = new Map();
+    for (let i = 0; i < arr.length; i++) {
+        if (!res.has(arr[i])) {
+            let flag = true;
+            const vals = [...res.values()];
+            for (let j = 0; j < vals.length; j++) {
+                if (isEqualObject(arr[i], vals[j])) {
+                    flag = false;
+                }
+            }
+            flag && res.set(JSON.stringify(arr[i]), arr[i]);
         }
-    },
+    }
+
+    return [...res.values()];
 }
-console.log(isEqualObject(a, b))
+
+console.log(arrF(obj));
