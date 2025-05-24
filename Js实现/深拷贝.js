@@ -1,12 +1,12 @@
 function deepClone(target) {
     const map = new WeakMap()
 
-    function isObject(target) {
+    function isObjOrFn(target) {
         return (typeof target === 'object' && target) || typeof target === 'function'
     }
 
     function clone(data) {
-        if (!isObject(data)) {
+        if (!isObjOrFn(data)) {
             return data
         }
         if ([Date, RegExp].includes(data.constructor)) {
@@ -30,7 +30,7 @@ function deepClone(target) {
             const result = new Map()
             map.set(data, result)
             data.forEach((val, key) => {
-                if (isObject(val)) {
+                if (isObjOrFn(val)) {
                     result.set(key, clone(val))
                 } else {
                     result.set(key, val)
@@ -42,7 +42,7 @@ function deepClone(target) {
             const result = new Set()
             map.set(data, result)
             data.forEach(val => {
-                if (isObject(val)) {
+                if (isObjOrFn(val)) {
                     result.add(clone(val))
                 } else {
                     result.add(val)
@@ -58,7 +58,7 @@ function deepClone(target) {
         map.set(data, result)
         keys.forEach(key => {
             const val = data[key]
-            if (isObject(val)) {
+            if (isObjOrFn(val)) {
                 result[key] = clone(val)
             } else {
                 result[key] = val

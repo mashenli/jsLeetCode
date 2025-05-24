@@ -129,7 +129,7 @@ class Promise {
         return this.then(null, fn);
     }
 }
-
+// 处理then的返回值是一个promise
 function resolvePromise(promise2, x, resolve, reject) {
     if (x === promise2) {
         return reject(new TypeError('Chaining cycle detected for promise'));
