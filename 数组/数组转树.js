@@ -49,9 +49,10 @@ const arr = [{
 
 
 function arrToTree(arr, parentId) {
-    return arr.filter(item => parentId === undefined ? item.pid === 0 : item.pid === parentId).map(item => {
+    const filArr = arr.filter(item => parentId === undefined ? item.pid === 0 : item.pid === parentId);
+    return filArr.map(item => {
         if (arrToTree(arr, item.id).length) {
-            item.children = arrToTree(arr, item.id)            
+            item.children = arrToTree(arr, item.id)
         }
         return item
     })

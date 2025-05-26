@@ -2,7 +2,7 @@ function flat(arr) {
     let arrRes = [];
     arr.forEach(item => {
         if (Array.isArray(item)) {
-            arrRes = arrRes.concat(arguments.callee(item));
+            arrRes = arrRes.concat(flat(item));
         } else {
             arrRes.push(item);
         }

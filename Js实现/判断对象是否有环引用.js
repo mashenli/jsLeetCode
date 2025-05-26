@@ -16,8 +16,7 @@ function cycleDetector(obj) {
     let flag = false
 
     function cycle(o) {
-        const keys = Object.keys(o)
-        for (const key of keys) {
+        for (const key in o) {
             const temp = o[key]
             if (typeof temp === 'object' && temp !== null) {
                 if (arr.indexOf(temp) >= 0) {
