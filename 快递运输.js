@@ -16,15 +16,16 @@
 
 const getMax = (nums, max) => {
     const sortNums = nums.sort((a, b) => a - b);
-    let sum = sortNums.reduce((pre, cur) => pre + cur);
-    for (let i = sortNums.length - 1; i >= 0; i--) {
-        if (sum - sortNums[i] > max) {
-            sum = sum - sortNums[i];
-        } else {
+    let sum = 0;
+    for (let i = 0; i < sortNums.length; i++) {
+        if (sum + sortNums[i] <= max) {
+            sum += sortNums[i];
+        }
+        else {
             return i;
         }
     }
-
+    return sortNums.length;
 }
 const a = [5, 10, 2, 11];
 console.log(getMax(a, 20));
